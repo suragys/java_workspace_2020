@@ -29,9 +29,9 @@ public class _692TopKFrequentWords {
             freqMap.put(w, freqMap.getOrDefault(w, 0) + 1);
         }
 
-        List<String> wordsList = new ArrayList<String>(freqMap.keySet());
+        List<String> wordsList = new ArrayList<>(freqMap.keySet());
 
-        Collections.sort(wordsList, (w1, w2) -> {
+        wordsList.sort((w1, w2) -> {
             if (freqMap.get(w1).equals(freqMap.get(w2))) {
                 return w1.compareTo(w2);
             }
@@ -42,4 +42,16 @@ public class _692TopKFrequentWords {
 
 
     }
+
+    public static void main(String[] args) {
+        List<List<Integer>> g = new ArrayList<>();
+        g.add(new ArrayList<>(Arrays.asList(1, 2, 3, 4)));
+        g.add(new ArrayList<>(Arrays.asList(5, 6, 7, 8)));
+
+        System.out.println(g.get(1).get(1));
+        System.out.println(g.get(1).get(3));
+
+    }
+
+
 }

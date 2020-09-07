@@ -6,6 +6,8 @@ public class ReorderDatInLogFiles {
     public String[] reorderLogFiles(String[] logs) {
         List<Log> letterLogs = new ArrayList<>();
         List<Log> digitLogs = new LinkedList<>();
+
+
         for (String l : logs) {
             Log log = new Log(l);
             if (log.isLetterLog) {
@@ -14,15 +16,24 @@ public class ReorderDatInLogFiles {
                 digitLogs.add(log);
             }
         }
-        Comparator<Log> compareByLogData = new Comparator<Log>() {
-            @Override
-            public int compare(Log o1, Log o2) {
-                int v = o1.logData.compareTo(o2.logData);
-                if (v == 0) {
-                    return o1.identifier.compareTo(o2.identifier);
-                }
-                return v;
+        /**
+         * Comparator<Log> compareByLogData = new Comparator<Log>() {
+         *             @Override
+         *             public int compare(Log o1, Log o2) {
+         *                 int v = o1.logData.compareTo(o2.logData);
+         *                 if (v == 0) {
+         *                     return o1.identifier.compareTo(o2.identifier);
+         *                 }
+         *                 return v;
+         *             }
+         *         };
+         */
+        Comparator<Log> compareByLogData = (o1, o2) -> {
+            int v = o1.logData.compareTo(o2.logData);
+            if (v == 0) {
+                return o1.identifier.compareTo(o2.identifier);
             }
+            return v;
         };
 
         /*
@@ -36,7 +47,7 @@ public class ReorderDatInLogFiles {
 
          */
 
-        Collections.sort(letterLogs, compareByLogData);
+        letterLogs.sort(compareByLogData);
         String[] result = new String[letterLogs.size() + digitLogs.size()];
         int i = 0;
         for (Log l : letterLogs) {
@@ -66,10 +77,18 @@ public class ReorderDatInLogFiles {
             this.isLetterLog = Character.isAlphabetic(logData.charAt(0));
         }
 
+
         @Override
         public String toString() {
             return identifier + " " + logData;
         }
+    }
+
+    public static boolean isInstanceOfMap(Object value) {
+        if (value instanceof Map) {
+            return true;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
